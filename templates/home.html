@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="floating-element floating-element-1"></div>
+    <div class="floating-element floating-element-2"></div>
+    <div class="floating-element floating-element-3"></div>
+    
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Find Your Perfect <span class="text-gradient">Scholarship</span> Match</h1>
+            <p class="hero-description">Our AI-powered platform matches you with scholarships that fit your unique profile, saving you time and increasing your chances of success.</p>
+            <div class="hero-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'scholarships' %}" class="btn btn-primary btn-large">Browse Scholarships</a>
+                    <a href="{% url 'recommendations' %}" class="btn btn-outline btn-large">View My Matches</a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-primary btn-large">Get Started</a>
+                    <a href="{% url 'scholarships' %}" class="btn btn-outline btn-large">Browse Scholarships</a>
+                {% endif %}
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">1,000+</span>
+                    <span class="stat-label">Scholarships</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">₹75Cr+</span>
+                    <span class="stat-label">Awarded</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Success Rate</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="{% static 'images/hero-student.png' %}" alt="Student receiving scholarship">
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <h2 class="section-title">Smart Features <span class="text-gradient">Powered by AI</span></h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <h3>Intelligent Profiling</h3>
+                <p>Create a detailed profile that helps our AI understand your unique background, skills, and needs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>AI Matching Engine</h3>
+                <p>Our advanced algorithm matches you with scholarships that perfectly fit your profile.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3>Personalized Dashboard</h3>
+                <p>Track your applications, deadlines, and recommendations in one convenient place.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-check-double"></i>
+                </div>
+                <h3>Eligibility Checking</h3>
+                <p>Automatically verify your eligibility for scholarships before you apply.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3>Smart Alerts</h3>
+                <p>Get notified about new opportunities and approaching deadlines.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Community Forum</h3>
+                <p>Connect with other students and share experiences and advice.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+    <div class="container">
+        <h2 class="section-title">How <span class="text-gradient">VidyaSaathi</span> Works</h2>
+        <div class="steps-container">
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+                        <h3>Create Your Profile</h3>
+                        <p>Tell us about your academic background, interests, and financial situation.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-icon"><i class="fas fa-brain"></i></div>
+                        <h3>Get AI Recommendations</h3>
+                        <p>Our system matches you with scholarships that fit your unique profile.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-icon"><i class="fas fa-tasks"></i></div>
+                        <h3>Apply & Track</h3>
+                        <p>Apply to scholarships and track your progress all in one place.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>Receive Funding</h3>
+                        <p>Get the financial support you need for your education.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recommendations Preview -->
+{% if recommendations %}
+<section class="recommendations-preview">
+    <div class="container">
+        <h2 class="section-title">Your <span class="text-gradient">Top Matches</span></h2>
+        <div class="recommendations-grid">
+            {% for recommendation in recommendations %}
+            <div class="recommendation-card">
+                <div class="recommendation-match">
+                    <div class="match-score">{{ recommendation.match_score }}%</div>
+                    <div class="match-label">Match</div>
+                </div>
+                <div class="recommendation-content">
+                    <h3>{{ recommendation.scholarship.title }}</h3>
+                    <p class="scholarship-provider">by {{ recommendation.scholarship.provider }}</p>
+                    <div class="scholarship-details">
+                        <span class="amount">₹{{ recommendation.scholarship.amount }}</span>
+                        <span class="deadline">Deadline: {{ recommendation.scholarship.deadline|date:"M d, Y" }}</span>
+                    </div>
+                    <div class="recommendation-actions">
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                        <a href="{% url 'recommendations' %}" class="btn btn-outline">View All</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Testimonials -->
+<section class="testimonials">
+    <div class="container">
+        <h2 class="section-title">Success <span class="text-gradient">Stories</span></h2>
+        <div class="testimonial-slider">
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p>"VidyaSaathi helped me find scholarships I didn't even know existed. I received over $20,000 in
+                        funding for my undergraduate studies!"</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="{% static 'images/test_1.png' %}" alt="test_1">
+                    <div>
+                        <h4>Rohan Sharma</h4>
+                        <p>Computer Science Student</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p>"The AI matching system is incredible! It saved me countless hours of searching and helped me
+                        find scholarships that were perfect for my profile."</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="{% static 'images/test_2.png' %}" alt="test_2">
+                    <div>
+                        <h4>Priya Sharma</h4>
+                        <p>Medical Student</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p>"As an international student, finding scholarships was challenging until I discovered
+                        VidyaSaathi. The platform connected me with opportunities specifically for students like me."
+                    </p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                        alt="Student">
+                    <div>
+                        <h4>David Chen</h4>
+                        <p>International Student</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Find Your Perfect Scholarship Match?</h2>
+            <p>Join thousands of students who have already discovered their ideal scholarships through VidyaSaathi.</p>
+            {% if user.is_authenticated %}
+            <a href="{% url 'recommendations' %}" class="btn btn-primary btn-large">View My Recommendations</a>
+            {% else %}
+            <a href="{% url 'register' %}" class="btn btn-primary btn-large">Create Your Profile Now</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

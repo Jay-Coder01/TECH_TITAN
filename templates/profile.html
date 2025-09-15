@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="padding-top: 120px;">
+    <div class="profile-header">
+        <h2 class="section-title">Your <span class="text-gradient">Profile</span></h2>
+        <p>Complete your profile to get personalized scholarship recommendations</p>
+    </div>
+
+    <div class="profile-container">
+        <form method="post" class="profile-form">
+            {% csrf_token %}
+            
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <h3><i class="fas fa-user"></i> Personal Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="date_of_birth">Date of Birth</label>
+                        <input type="date" id="date_of_birth" name="date_of_birth" 
+                            value="{{ profile.date_of_birth|date:'Y-m-d' }}" class="form-control">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" class="form-control">
+                            <option value="">Select Gender</option>
+                            <option value="male" {% if profile.gender == 'male' %}selected{% endif %}>Male</option>
+                            <option value="female" {% if profile.gender == 'female' %}selected{% endif %}>Female</option>
+                            <option value="other" {% if profile.gender == 'other' %}selected{% endif %}>Other</option>
+                        </select>
+                        <i class="fas fa-venus-mars"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="nationality">Nationality</label>
+                        <input type="text" id="nationality" name="nationality" 
+                               value="{{ profile.nationality }}" class="form-control" placeholder="e.g., Indian">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="citizenship">Citizenship</label>
+                        <input type="text" id="citizenship" name="citizenship" 
+                               value="{{ profile.citizenship }}" class="form-control" placeholder="e.g., Indian">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Academic Information Section -->
+            <div class="form-section">
+                <h3><i class="fas fa-graduation-cap"></i> Academic Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="education_level">Education Level</label>
+                        <select id="education_level" name="education_level" class="form-control" required>
+                            <option value="">Select Education Level</option>
+                            {% for value, label in education_levels %}
+                            <option value="{{ value }}" {% if profile.education_level == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="field_of_study">Field of Study</label>
+                        <input type="text" id="field_of_study" name="field_of_study" 
+                            value="{{ profile.field_of_study }}" class="form-control" placeholder="e.g., Computer Science">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cgpa">CGPA (0-10.0)</label>
+                        <input type="number" id="cgpa" name="cgpa" step="0.01" min="0" max="10.0" 
+                            value="{{ profile.cgpa }}" class="form-control" placeholder="e.g., 8.5">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="graduation_year">Expected Graduation Year</label>
+                        <input type="number" id="graduation_year" name="graduation_year" 
+                               value="{{ profile.graduation_year }}" class="form-control" placeholder="e.g., 2025">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Financial Information Section -->
+            <div class="form-section">
+                <h3><i class="fas fa-money-bill-wave"></i> Financial Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="family_income">Annual Family Income (₹)</label>
+                        <input type="number" id="family_income" name="family_income" 
+                               value="{{ profile.family_income }}" class="form-control" placeholder="e.g., 500000">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="financial_aid_needed" name="financial_aid_needed" 
+                                   {% if profile.financial_aid_needed %}checked{% endif %}>
+                            <span class="checkmark"></span>
+                            <label for="financial_aid_needed">I need financial aid</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Additional Information Section -->
+            <div class="form-section">
+                <h3><i class="fas fa-info-circle"></i> Additional Information</h3>
+                
+                <div class="form-group">
+                    <label>Extracurricular Activities (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        {% for activity in extracurricular_choices %}
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="extracurricular_{{ activity.value }}" 
+                                   name="extracurriculars" value="{{ activity.value }}"
+                                   {% if activity.value in profile.get_extracurriculars %}checked{% endif %}>
+                            <span class="checkmark"></span>
+                            <label for="extracurricular_{{ activity.value }}">{{ activity.label }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Achievements & Awards (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        {% for achievement in achievement_choices %}
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="achievement_{{ achievement.value }}" 
+                                   name="achievements" value="{{ achievement.value }}"
+                                   {% if achievement.value in profile.get_achievements %}checked{% endif %}>
+                            <span class="checkmark"></span>
+                            <label for="achievement_{{ achievement.value }}">{{ achievement.label }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Minority Groups (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        {% for group in minority_choices %}
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="minority_{{ group.value }}" 
+                                   name="minority_groups" value="{{ group.value }}"
+                                   {% if group.value in profile.get_minority_groups %}checked{% endif %}>
+                            <span class="checkmark"></span>
+                            <label for="minority_{{ group.value }}">{{ group.label }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Disabilities (Select all that apply)</label>
+                    <div class="checkbox-group">
+                        {% for disability in disability_choices %}
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="disability_{{ disability.value }}" 
+                                   name="disabilities" value="{{ disability.value }}"
+                                   {% if disability.value in profile.get_disabilities %}checked{% endif %}>
+                            <span class="checkmark"></span>
+                            <label for="disability_{{ disability.value }}">{{ disability.label }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-large">
+                    <i class="fas fa-save"></i> Save Profile
+                </button>
+                <a href="{% url 'recommendations' %}" class="btn btn-outline">
+                    <i class="fas fa-graduation-cap"></i> View Recommendations
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Profile Completion Card -->
+    <div class="profile-completion">
+        <div class="completion-card">
+            <h4>Profile Completion</h4>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill">
+                </div>
+                <span class="progress-text">{{ completion_percentage }}% Complete</span>
+            </div>
+            <p>Complete your profile to get better scholarship recommendations</p>
+            <ul class="completion-tips">
+                <li><i class="fas fa-check-circle"></i> Add your education details</li>
+                <li><i class="fas fa-check-circle"></i> Specify your financial needs</li>
+                <li><i class="fas fa-check-circle"></i> Select your extracurricular activities</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

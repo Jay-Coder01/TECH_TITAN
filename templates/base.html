@@ -1,0 +1,478 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VidyaSaathi - Smart Scholarship Recommendations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+    /* Enhanced Global Styles with Dark Mode Variables */
+    :root {
+        /* Light theme (default) */
+        --primary: #4361ee;
+        --secondary: #3a0ca3;
+        --accent: #f72585;
+        --success: #4cc9f0;
+        --warning: #f9c74f;
+        --danger: #f94144;
+        --gray: #6c757d;
+        --light-gray: #e9ecef;
+        
+        /* Background colors */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f9fa;
+        --bg-tertiary: #e9ecef;
+        
+        /* Text colors */
+        --text-primary: #212529;
+        --text-secondary: #6c757d;
+        --text-muted: #adb5bd;
+        
+        /* Border colors */
+        --border-color: #dee2e6;
+        
+        /* Card colors */
+        --card-bg: #ffffff;
+        --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        
+        /* Navbar */
+        --navbar-bg: rgba(255, 255, 255, 0.95);
+        --navbar-text: #212529;
+        --navbar-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        
+        /* Footer */
+        --footer-bg: linear-gradient(to bottom, #1a1f36, #0d111f);
+        --footer-text: #ffffff;
+        
+        /* Recommendation cards */
+        --recommendation-bg: #ffffff;
+        --recommendation-text: #212529;
+        --match-score-bg: #4361ee;
+        --match-score-text: #ffffff;
+    }
+
+    [data-theme="dark"] {
+        /* Dark theme */
+        --bg-primary: #121212;
+        --bg-secondary: #1e1e1e;
+        --bg-tertiary: #2d2d2d;
+        
+        --text-primary: #e9ecef;
+        --text-secondary: #adb5bd;
+        --text-muted: #6c757d;
+        
+        --border-color: #444;
+        
+        --card-bg: #1e1e1e;
+        --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        
+        --navbar-bg: rgba(30, 30, 30, 0.95);
+        --navbar-text: #e9ecef;
+        --navbar-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        
+        --footer-bg: linear-gradient(to bottom, #0a0a0a, #000000);
+        
+        /* Recommendation cards - dark mode */
+        --recommendation-bg: #2d2d2d;
+        --recommendation-text: #e9ecef;
+        --match-score-bg: #4cc9f0;
+        --match-score-text: #121212;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.6;
+        color: var(--text-primary);
+        background-color: var(--bg-primary);
+        overflow-x: hidden;
+    }
+
+    /* Apply dark mode to all components */
+    .navbar {
+        background: var(--navbar-bg);
+        color: var(--navbar-text);
+        box-shadow: var(--navbar-shadow);
+    }
+
+    .nav-link {
+        color: var(--navbar-text);
+    }
+
+    .feature-card, 
+    .completion-card, 
+    .recommendation-card, 
+    .scholarship-card,
+    .forum-topic,
+    .team-member,
+    .stat,
+    .contact-form,
+    .auth-content,
+    .profile-container,
+    .step-content,
+    .testimonial {
+        background: var(--card-bg);
+        box-shadow: var(--card-shadow);
+        color: var(--text-primary);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
+    .search-box input,
+    .filters select,
+    .forum-filter select,
+    .newsletter-input {
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        border-color: var(--border-color);
+    }
+
+    .form-group label {
+        color: var(--text-primary);
+    }
+
+    .description,
+    .scholarship-provider,
+    .stat-label,
+    .role,
+    .contact-item p,
+    .auth-content > p {
+        color: var(--text-secondary);
+    }
+
+    .footer {
+        background: var(--footer-bg);
+        color: var(--footer-text);
+    }
+
+    .footer-section p,
+    .footer-section ul li a {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .footer-bottom p {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Dark mode toggle button */
+    .theme-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 15px;
+        color: var(--text-primary);
+        background-color: var(--bg-secondary);
+    }
+
+    .theme-toggle:hover {
+        background-color: var(--bg-tertiary);
+    }
+
+    /* Dark mode specific adjustments */
+    [data-theme="dark"] .bg-circle,
+    [data-theme="dark"] .particle {
+        opacity: 0.05;
+    }
+
+    [data-theme="dark"] .hero::before {
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%234361ee" fill-opacity="0.03" d="M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,224C672,235,768,181,864,160C960,139,1056,149,1152,165.3C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+    }
+
+    /* Fix for recommendation cards */
+    .recommendation-card {
+        background: var(--recommendation-bg);
+        color: var(--recommendation-text);
+    }
+
+    .recommendation-content h3,
+    .recommendation-content p,
+    .scholarship-description,
+    .recommendation-reasons h4,
+    .recommendation-reasons p {
+        color: var(--recommendation-text);
+    }
+
+    .match-score {
+        background: var(--match-score-bg);
+        color: var(--match-score-text);
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    /* Button alignment fixes */
+    .recommendation-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .recommendation-actions .btn {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    /* Hero section text contrast */
+    .hero-title,
+    .hero-description {
+        color: var(--text-primary);
+    }
+
+    .stat-number {
+        color: var(--primary);
+    }
+
+    .stat-label {
+        color: var(--text-secondary);
+    }
+
+    /* Ensure text visibility in dark mode */
+    [data-theme="dark"] .hero-title,
+    [data-theme="dark"] .hero-description,
+    [data-theme="dark"] .section-title,
+    [data-theme="dark"] .recommendation-content h3 {
+        color: var(--text-primary);
+    }
+
+    /* Fix for scholarship amount and deadline */
+    .amount {
+        color: var(--success);
+        font-weight: bold;
+    }
+
+    .deadline {
+        color: var(--text-secondary);
+        background: var(--bg-secondary);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+
+    /* Navbar button alignment */
+    .nav-buttons {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    /* Ensure proper spacing in mobile view */
+    @media (max-width: 768px) {
+        .nav-buttons {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .theme-toggle {
+            margin: 0 auto;
+        }
+        
+        .recommendation-actions {
+            flex-direction: column;
+        }
+        
+        .recommendation-actions .btn {
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="{% url 'home' %}">
+                    <i class="fas fa-graduation-cap logo-icon"></i> VidyaSaathi
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="{% url 'home' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
+                <a href="{% url 'scholarships' %}" class="nav-link {% if request.path == '/scholarships/' %}active{% endif %}">Scholarships</a>
+                <a href="{% url 'forum' %}" class="nav-link {% if request.path == '/forum/' %}active{% endif %}">Forum</a>
+                <a href="{% url 'about' %}" class="nav-link {% if request.path == '/about/' %}active{% endif %}">About</a>
+                <a href="{% url 'contact' %}" class="nav-link {% if request.path == '/contact/' %}active{% endif %}">Contact</a>
+                <div class="nav-buttons">
+                    <!-- Dark mode toggle -->
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    
+                    {% if request.session.user_id %}
+                    <a class="nav-link" href="{% url 'profile' %}">Welcome, {{ request.session.user_name }}</a>
+                    <a class="btn btn-outline" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                    <a class="btn btn-outline" href="{% url 'login' %}">Login</a>
+                    <a class="btn btn-primary" href="{% url 'register' %}">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="messages-container">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            <span>{{ message }}</span>
+            <button class="alert-close">&times;</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VidyaSaathi</h3>
+                    <p>AI-powered scholarship recommendations for students.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'scholarships' %}">Scholarships</a></li>
+                        <li><a href="{% url 'forum' %}">Forum</a></li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Application Tips</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@VidyaSaathi.com</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fab fa-whatsapp"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Support Available 24/7</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VidyaSaathi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or respect OS preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Set initial theme
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            
+            // Toggle theme on button click
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                if (currentTheme === 'light') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            });
+            
+            // Listen for system theme changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (!localStorage.getItem('theme')) {
+                    if (e.matches) {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        themeIcon.classList.remove('fa-moon');
+                        themeIcon.classList.add('fa-sun');
+                    } else {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                        themeIcon.classList.remove('fa-sun');
+                        themeIcon.classList.add('fa-moon');
+                    }
+                }
+            });
+        });
+    </script>
+    
+    <!-- Your existing JavaScript files -->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+</body>
+</html>

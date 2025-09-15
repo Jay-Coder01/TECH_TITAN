@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="padding-top: 120px;">
+    <div class="recommendations-header">
+        <h2 class="section-title">Your <span class="text-gradient">Recommendations</span></h2>
+        <p>Based on your profile, we've found these scholarships that match your qualifications.</p>
+        
+        <div class="recommendations-actions">
+            <a href="{% url 'refresh_recommendations' %}" class="btn btn-outline" id="refresh-btn">
+                <i class="fas fa-sync-alt"></i> Refresh Recommendations
+            </a>
+            <a href="{% url 'profile' %}" class="btn btn-primary">
+                <i class="fas fa-user-edit"></i> Edit Profile
+            </a>
+        </div>
+    </div>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Finding Recommendations for You</h3>
+            <p>We're analyzing your profile to find the best scholarship matches...</p>
+        </div>
+    </div>
+    
+    {% if recommendations %}
+    <div class="recommendations-grid">
+        {% for recommendation in recommendations %}
+        <div class="recommendation-card">
+            <div class="recommendation-match">
+                <div class="match-score">{{ recommendation.match_score }}%</div>
+                <div class="match-label">Match</div>
+            </div>
+            
+            <div class="recommendation-content">
+                <h3>{{ recommendation.scholarship.title }}</h3>
+                <p class="scholarship-provider">by {{ recommendation.scholarship.provider }}</p>
+                
+                <div class="scholarship-details">
+                    <span class="amount">₹{{ recommendation.scholarship.amount }}</span>
+                    <span class="deadline">Deadline: {{ recommendation.scholarship.deadline }}</span>
+                </div>
+                
+                <p class="scholarship-description">{{ recommendation.scholarship.description|truncatewords:30 }}</p>
+                
+                <div class="recommendation-reasons">
+                    <h4>Why this matches you:</h4>
+                    <p>{{ recommendation.reason }}</p>
+                </div>
+                
+                <div class="recommendation-actions">
+                    <a href="{{ recommendation.scholarship.website }}" target="_blank" class="btn btn-primary">Apply Now</a>
+                    <a href="#" class="btn btn-outline">Save</a>
+                    <a href="#" class="btn btn-outline">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-recommendations">
+        <i class="fas fa-search fa-3x"></i>
+        <h3>No recommendations yet</h3>
+        <p>Complete your profile to get personalized scholarship recommendations.</p>
+        <a href="{% url 'profile' %}" class="btn btn-primary">Complete Your Profile</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const refreshBtn = document.getElementById('refresh-btn');
+        const loadingScreen = document.getElementById('loading-screen');
+        
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Show loading screen
+                loadingScreen.style.display = 'flex';
+                
+                // Redirect to refresh URL after a short delay to show loading screen
+                setTimeout(function() {
+                    window.location.href = refreshBtn.href;
+                }, 500);
+            });
+        }
+        
+        // Hide loading screen if page takes too long to load
+        setTimeout(function() {
+            loadingScreen.style.display = 'none';
+        }, 5000);
+    });
+</script>
+{% endblock %}

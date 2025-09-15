@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="padding-top: 120px;">
+    <h2 class="section-title">About <span class="text-gradient">VidyaSaathi</span></h2>
+    
+    <div class="about-content">
+        <div class="about-text">
+            <h3>Our Mission</h3>
+            <p>VidyaSaathi was founded with a simple mission: to make quality education accessible to everyone through the power of technology. We believe that financial constraints should never be a barrier to achieving educational dreams.</p>
+            
+            <h3>What We Do</h3>
+            <p>Our AI-powered platform connects students with scholarship opportunities that match their unique profiles. We've helped thousands of students find and secure funding for their education, saving them countless hours of research and application time.</p>
+            
+            <h3>Our Technology</h3>
+            <p>Using advanced machine learning algorithms, we analyze thousands of scholarships to find the best matches for each student. Our system considers academic achievements, financial needs, extracurricular activities, and personal background to identify the most relevant opportunities.</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <h4>15,000+</h4>
+                    <p>Students Helped</p>
+                </div>
+                <div class="stat">
+                    <h4>₹315Cr+</h4>
+                    <p>Scholarship Money Found</p>
+                </div>
+                <div class="stat">
+                    <h4>8,000+</h4>
+                    <p>Scholarships in Database</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="Team photo">
+        </div>
+    </div>
+    
+    <h3 class="section-subtitle">Our <span class="text-gradient">Team</span></h3>
+    
+    <div class="team-grid">
+        <div class="team-member">
+            <div class="member-image">
+                <img src="{% static 'images\arpita.jpg' %}" alt="Team member">
+            </div>
+            <h4>Arpita Sutariya</h4>
+            <p class="role">Leader</p>
+            <p>Former professor of Education with 15+ years of experience in educational technology.</p>
+        </div>
+        
+        <div class="team-member">
+            <div class="member-image">
+                <img src="{% static 'images\jitesh.jpg' %}" alt="Team member">
+            </div>
+            <h4>jitesh Rajwani</h4>
+            <p class="role">Member</p>
+            <p>AI and machine learning expert with a passion for making technology accessible.</p>
+        </div>
+        
+        <div class="team-member">
+            <div class="member-image">
+            <img src="{% static 'images\jain.jpg' %}" alt="Team member">
+            </div>
+            <h4>Purvakshi Jain</h4>
+            <p class="role">Member</p>
+            <p>Connects students with educational institutions and scholarship providers.</p>
+        </div>
+        
+        <div class="team-member">
+            <div class="member-image">
+                <img src="{% static 'images\dharm.jpg' %}" alt="Team member">
+            </div>
+            <h4>Dharm Suthar</h4>
+            <p class="role">Member</p>
+            <p>Helps students navigate the scholarship application process and maximize their opportunities.</p>
+        </div>
+    </div>
+    
+    <div class="indian-context-section">
+        <h3 class="section-subtitle">Focused on <span class="text-gradient">Indian Students</span></h3>
+        <div class="indian-features">
+            <div class="feature">
+                <i class="fas fa-rupee-sign"></i>
+                <h4>Indian Scholarship Focus</h4>
+                <p>Specialized in Indian scholarships from government schemes, private organizations, and educational institutions</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-graduation-cap"></i>
+                <h4>CGPA-Based Matching</h4>
+                <p>Our system understands the Indian 10-point CGPA system for accurate scholarship matching</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-users"></i>
+                <h4>Reservation Categories</h4>
+                <p>Support for SC/ST, OBC, EWS, and other reservation categories as per Indian education system</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-university"></i>
+                <h4>Indian Education Levels</h4>
+                <p>Tailored for Indian education system - 10+2, Undergraduate, Postgraduate, and PhD programs</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.indian-context-section {
+    margin-top: 60px;
+    padding: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    color: white;
+}
+
+.indian-context-section h3 {
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.indian-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.feature i {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #ffd700;
+}
+
+.feature h4 {
+    margin-bottom: 10px;
+    color: white;
+}
+
+.feature p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+</style>
+{% endblock %}

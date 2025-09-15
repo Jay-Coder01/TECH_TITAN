@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="padding-top: 120px;">
+    <h2 class="section-title">Available <span class="text-gradient">Scholarships</span></h2>
+    
+    <div class="search-filter">
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search scholarships...">
+            <button id="search-button"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="filters">
+            <select id="category-filter">
+                <option value="all">All Categories</option>
+                <option value="merit">Merit-Based</option>
+                <option value="need">Need-Based</option>
+                <option value="minority">Minority</option>
+                <option value="international">International</option>
+            </select>
+            <select id="education-filter">
+                <option value="all">All Education Levels</option>
+                <option value="high_school">High School</option>
+                <option value="undergraduate">Undergraduate</option>
+                <option value="graduate">Graduate</option>
+                <option value="phd">PhD</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="scholarships-grid">
+        {% for scholarship in scholarships %}
+        <div class="scholarship-card" data-type="{{ scholarship.scholarship_type }}" data-education="{{ scholarship.education_level }}">
+            <div class="scholarship-header">
+                <h3>{{ scholarship.title }}</h3>
+                <span class="deadline">Deadline: {{ scholarship.deadline|date:"M d, Y" }}</span>
+            </div>
+            <div class="scholarship-body">
+                <p class="amount">₹{{ scholarship.amount }}</p>
+                <p class="description">{{ scholarship.description|truncatewords:25 }}</p>
+                <div class="tags">
+                    <span class="tag">{{ scholarship.get_scholarship_type_display }}</span>
+                    <span class="tag">{{ scholarship.get_education_level_display }}</span>
+                    {% if scholarship.id in recommended_ids %}
+                    <span class="tag recommended">Recommended</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="scholarship-footer">
+                <a href="#" class="btn btn-primary">Apply Now</a>
+                <a href="#" class="btn btn-outline">Save</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

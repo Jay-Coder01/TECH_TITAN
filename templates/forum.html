@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="padding-top: 120px;">
+    <h2 class="section-title">Community <span class="text-gradient">Forum</span></h2>
+    
+    <div class="forum-actions">
+        <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i> New Topic</a>
+        <div class="forum-filter">
+            <select>
+                <option>All Topics</option>
+                <option>Application Tips</option>
+                <option>Scholarship Advice</option>
+                <option>Success Stories</option>
+                <option>Questions</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="forum-topics">
+        <div class="forum-topic">
+            <div class="topic-header">
+                <h3>How to write a compelling scholarship essay</h3>
+                <span class="topic-date">Posted 2 days ago</span>
+            </div>
+            <div class="topic-body">
+                <p>I'm applying for several scholarships and struggling with the essay portion. Any tips on how to make my application stand out?</p>
+            </div>
+            <div class="topic-footer">
+                <div class="topic-author">
+                    <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="User">
+                    <span>John Doe</span>
+                </div>
+                <div class="topic-stats">
+                    <span><i class="fas fa-comments"></i> 24</span>
+                    <span><i class="fas fa-eye"></i> 156</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="forum-topic">
+            <div class="topic-header">
+                <h3>International student scholarship opportunities</h3>
+                <span class="topic-date">Posted 5 days ago</span>
+            </div>
+            <div class="topic-body">
+                <p>As an international student from India, what are some good scholarship opportunities I should apply for?</p>
+            </div>
+            <div class="topic-footer">
+                <div class="topic-author">
+                    <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="User">
+                    <span>Priya Patel</span>
+                </div>
+                <div class="topic-stats">
+                    <span><i class="fas fa-comments"></i> 32</span>
+                    <span><i class="fas fa-eye"></i> 210</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="forum-topic">
+            <div class="topic-header">
+                <h3>Just received my first scholarship!</h3>
+                <span class="topic-date">Posted 1 week ago</span>
+            </div>
+            <div class="topic-body">
+                <p>After applying to 15 different scholarships, I finally received notification that I've been awarded the STEM Excellence scholarship! Don't give up!</p>
+            </div>
+            <div class="topic-footer">
+                <div class="topic-author">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="User">
+                    <span>Michael Zhang</span>
+                </div>
+                <div class="topic-stats">
+                    <span><i class="fas fa-comments"></i> 45</span>
+                    <span><i class="fas fa-eye"></i> 312</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="forum-topic">
+            <div class="topic-header">
+                <h3>Recommendation letters - who to ask?</h3>
+                <span class="topic-date">Posted 1 week ago</span>
+            </div>
+            <div class="topic-body">
+                <p>I need two recommendation letters for my scholarship applications. Should I ask teachers, employers, or community leaders? What's most effective?</p>
+            </div>
+            <div class="topic-footer">
+                <div class="topic-author">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="User">
+                    <span>Sarah Johnson</span>
+                </div>
+                <div class="topic-stats">
+                    <span><i class="fas fa-comments"></i> 28</span>
+                    <span><i class="fas fa-eye"></i> 189</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
